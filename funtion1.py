@@ -35,7 +35,7 @@ print(times())
 print(times(5))
 print(times(5,6))
 
-#지역변수와 전역변수
+#지역변수와 전역변수111
 x=5
 def func1(a):
     return a+x
