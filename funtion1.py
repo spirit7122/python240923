@@ -47,3 +47,16 @@ def func2(a):
     return a+x
 print(func2(1))
 
+#가변인자 함수
+def union(*ar):
+    #지역변수
+    result=[]
+    for item in ar:
+        for x in item:
+            if x not in result:
+                result.append(x)
+    return result
+
+print(union("HAM","EGG"))
+print(union("HAM","EGG","SPAM"))
+            
