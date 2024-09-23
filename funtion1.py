@@ -27,7 +27,7 @@ def intersect(prelist,postlist):
 
 print (intersect("HAM","SPAM"))
 
-#기본값을 ㅁㅇ시
+#기본값을 명시
 def times(a=10,b=20):
     return a*b
 #호출
