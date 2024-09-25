@@ -1,0 +1,29 @@
+import re
+
+# 이메일 주소 패턴 정의 (기본적인 형식)
+email_pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+
+# 이메일 주소 유효성 검사 함수
+def is_valid_email(email):
+    return re.match(email_pattern, email) is not None
+
+# 10개의 샘플 이메일 주소 생성
+email_samples = [
+    "valid.email@example.com",
+    "invalid-email@.com",
+    "another.valid.email123@example.co.uk",
+    "email@domain",
+    "email@domain.c",
+    "first.last@sub.domain.com",
+    "1234567890@domain.com",
+    "user@local-server.com",
+    "user.name+tag+sorting@example.com",
+    "this_is_valid@domain123.io"
+]
+
+# 샘플 이메일 주소 검증 및 출력
+for email in email_samples:
+    if is_valid_email(email):
+        print(f"{email} : 유효한 이메일 주소입니다.")
+    else:
+        print(f"{email} : 유효하지 않은 이메일 주소입니다.")
