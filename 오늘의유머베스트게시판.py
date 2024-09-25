@@ -26,7 +26,7 @@ for n in range(1,11):
                 try:
                         title = item.find("a").text.strip()
                         # print(title)                       
-                        if (re.search('한국', title)):
+                        if (re.search('대통', title)):
                                 print(title.strip())
                                 f.write(f"{title}\n")
                 except:
