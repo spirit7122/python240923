@@ -29,3 +29,4 @@ for post in posts:
     print(f"{title},{price},{region}")
     f.write(f"{title},{price},{region}\n")
 
+f.close()

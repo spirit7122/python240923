@@ -1,0 +1,35 @@
+import openpyxl
+import random
+
+# 1. 엑셀 워크북 생성
+wb = openpyxl.Workbook()
+ws = wb.active
+ws.title = "Product Sales"
+
+# 2. 헤더 추가
+ws.append(["Product ID", "Product Name", "Quantity", "Price"])
+
+# 3. 샘플 제품명 리스트
+product_names = [
+    "Smartphone", "Laptop", "Tablet", "Smartwatch", "Monitor", "Keyboard", 
+    "Mouse", "Headphones", "Bluetooth Speaker", "Webcam", "Printer", 
+    "External Hard Drive", "SSD", "Graphics Card", "RAM", "Motherboard", 
+    "CPU", "Power Supply", "Cooling Fan", "Router", "Modem", "TV", 
+    "Soundbar", "Home Theater", "Projector", "VR Headset", "Smart Glasses",
+    "Portable Charger", "USB Cable", "Wireless Charger"
+]
+
+# 4. 100개의 랜덤 제품 데이터 생성
+for i in range(1, 101):
+    product_id = f"P{i:03}"  # 제품 ID 생성 (P001 ~ P100)
+    product_name = random.choice(product_names)  # 랜덤 제품명 선택
+    quantity = random.randint(1, 50)  # 수량 (1~50개 랜덤 선택)
+    price = round(random.uniform(50, 1500), 2)  # 가격 ($50 ~ $1500 사이 랜덤 선택, 소수점 둘째자리)
+    
+    # 5. 엑셀 행에 데이터 추가
+    ws.append([product_id, product_name, quantity, price])
+
+# 6. 엑셀 파일로 저장
+wb.save("products.xlsx")
+
+print("products.xlsx 파일이 생성되었습니다.")

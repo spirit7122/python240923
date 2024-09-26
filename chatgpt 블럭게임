@@ -1,0 +1,106 @@
+import pygame
+import random
+
+# 초기화
+pygame.init()
+
+# 색상 정의
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+
+# 화면 크기 설정
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+# 공 설정
+ball_speed = [5, 5]
+ball_radius = 10
+ball = pygame.Rect(SCREEN_WIDTH // 2 - ball_radius, SCREEN_HEIGHT // 2 - ball_radius, ball_radius * 2, ball_radius * 2)
+
+# 바 설정
+bar_width = 400
+bar_height = 10
+bar_speed = 10
+bar = pygame.Rect(SCREEN_WIDTH // 2 - bar_width // 2, SCREEN_HEIGHT - 30, bar_width, bar_height)
+
+# 블록 설정
+block_rows = 5
+block_cols = 10
+block_width = SCREEN_WIDTH // block_cols
+block_height = 20
+
+blocks = []
+for row in range(block_rows):
+    for col in range(block_cols):
+        block = pygame.Rect(col * block_width, row * block_height, block_width, block_height)
+        blocks.append(block)
+
+# 게임 속도
+clock = pygame.time.Clock()
+
+# 점수
+score = 0
+
+# 게임 루프
+running = True
+while running:
+    screen.fill(BLACK)
+
+    # 이벤트 처리
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # 바 이동
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and bar.left > 0:
+        bar.left -= bar_speed
+    if keys[pygame.K_RIGHT] and bar.right < SCREEN_WIDTH:
+        bar.right += bar_speed
+
+    # 공 이동
+    ball.left += ball_speed[0]
+    ball.top += ball_speed[1]
+
+    # 공이 벽에 부딪힐 때 반사
+    if ball.left <= 0 or ball.right >= SCREEN_WIDTH:
+        ball_speed[0] = -ball_speed[0]
+    if ball.top <= 0:
+        ball_speed[1] = -ball_speed[1]
+    if ball.bottom >= SCREEN_HEIGHT:
+        running = False  # 바닥에 닿으면 게임 오버
+
+    # 공과 바 충돌 체크
+    if ball.colliderect(bar):
+        ball_speed[1] = -ball_speed[1]
+
+    # 공과 블록 충돌 체크
+    for block in blocks[:]:
+        if ball.colliderect(block):
+            ball_speed[1] = -ball_speed[1]
+            blocks.remove(block)
+            score += 1
+
+    # 바, 공, 블록 그리기
+    pygame.draw.rect(screen, BLUE, bar)
+    pygame.draw.ellipse(screen, WHITE, ball)
+    for block in blocks:
+        pygame.draw.rect(screen, GREEN, block)
+
+    # 점수 표시
+    font = pygame.font.Font(None, 36)
+    text = font.render(f"Score: {score}", True, WHITE)
+    screen.blit(text, (10, 10))
+
+    # 화면 업데이트
+    pygame.display.flip()
+
+    # 게임 속도 설정
+    clock.tick(60)
+
+# 게임 종료
+pygame.quit
